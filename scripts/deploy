@@ -9,7 +9,7 @@ sed -e "s;GROUP_NAME;${GIT_BRANCH};g" ${JSON_FILE}-new-${BUILD_NUMBER}.json > ${
 sed -e "s;task_role;${TASK_ROLE};g" ${JSON_FILE}-${BUILD_NUMBER}-v1.json > ${JSON_FILE}-${BUILD_NUMBER}.json
 cat ${JSON_FILE}-${BUILD_NUMBER}.json
 
-aws ecs register-task-definition --family ${TASK_FAMILY} --cli-input-json file://${JSON_FILE}-${BUILD_NUMBER}.json --region ap-south-1 
+ 
 
 
 # Jenkins Job wait until service is avaliable in cluster
@@ -26,7 +26,7 @@ rm -rf ${JSON_FILE}-${BUILD_NUMBER}.json
 
 if [ "$GIT_BRANCH" == "master" ]
 then
-SERVICE_NAME="nginx"
+SERVICE_NAME="nginx-service"
 IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
 TASK_FAMILY=
 CLUSTER="nginx-cluster"
@@ -35,7 +35,7 @@ RUNNING_COUNT=1
 startDeploy
 elif [ "$GIT_BRANCH" == "main" ]
 then
-SERVICE_NAME="nginx"
+SERVICE_NAME="nginx-service"
 IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
 TASK_FAMILY=
 CLUSTER="nginx-cluster"
@@ -45,7 +45,7 @@ RUNNING_COUNT=1
 startDeploy
 elif [ "$GIT_BRANCH" == "qa" ]
 then
-SERVICE_NAME="qa-jinglebid-admin"
+SERVICE_NAME="nginx-service"
 IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
 TASK_FAMILY=
 CLUSTER="nginx-cluster"
@@ -55,7 +55,7 @@ RUNNING_COUNT=1
 startDeploy
 elif [ "$GIT_BRANCH" == "main" ]
 then
-SERVICE_NAME="nginx"
+SERVICE_NAME="nginx-service"
 IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
 TASK_FAMILY=
 CLUSTER="Nginx-cluster"
