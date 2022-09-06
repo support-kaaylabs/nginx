@@ -1,5 +1,7 @@
+def COLOR_MAP = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
+
 pipeline {
-  agent {label 'main'}
+  agent {label 'master'}
   stages {
     
     stage('build') {
