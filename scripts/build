@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DevBuild()
+Build()
 {
 ECR_REPO=659428036160.dkr.ecr.ap-south-1.amazonaws.com/nginx
 DOCKER_BUILD_TAG=$GIT_BRANCH-${BUILD_NUMBER}
@@ -60,15 +60,15 @@ exit 1
 fi
 }
 
-if [[ "$GIT_BRANCH" == "development" || "$GIT_BRANCH" == "qa" || "$GIT_BRANCH" == "preprod" ]];
+if [[ "$GIT_BRANCH" == "main" || "$GIT_BRANCH" == "main" || "$GIT_BRANCH" == "main" ]];
 then
-aws s3 cp s3://jinglebid-configurations/config/v2/$GIT_BRANCH/jinglebid-admin/.env .
+
 DevBuild
-elif [[ "$GIT_BRANCH" == "master" ]];
+elif [[ "$GIT_BRANCH" == "main" ]];
 then
-aws s3 cp s3://jinglebid-configurations/config/v2/production/jinglebid-admin/.env .
+
 ProdBuild
 else
 echo "Skipping a build process because this branch is not permitted for docker build: ${GIT_BRANCH}"
 fi
-Footer
+
