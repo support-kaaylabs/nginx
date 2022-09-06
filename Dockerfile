@@ -1,21 +1,37 @@
-FROM nginx
+FROM node:14.16.1-alpine3.11 as build
 
+WORKDIR /apps
 
+RUN node --version
 
-# Create app directory
-WORKDIR /usr/src/app
+RUN npm --version
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+RUN apk add git
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
+COPY package*.json /apps/
 
-# Bundle app source
-COPY . .
+RUN yarn install 
 
-EXPOSE 8080
-CMD [ "npm", "start" ]
+COPY . /apps
+
+RUN yarn run build
+
+RUN ls
+
+# Confirm the working directory
+
+RUN ls -ltr build/
+
+# Production Environment
+
+FROM nginx:1.19.6-alpine
+
+COPY --from=build /apps/build /usr/share/nginx/html
+
+RUN rm -rf /etc/nginx/conf.d/default.conf
+
+COPY default.conf /etc/nginx/conf.d/
+
+EXPOSE  80
+
+CMD ["nginx", "-g", "daemon off;"]
