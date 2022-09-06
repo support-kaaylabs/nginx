@@ -22,8 +22,6 @@ RUN ls
 
 RUN ls -ltr build/
 
-# Production Environment
-
 FROM nginx:1.19.6-alpine
 
 COPY --from=build /apps/build /usr/share/nginx/html
