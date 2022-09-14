@@ -1,7 +1,5 @@
-def COLOR_MAP = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
-
 pipeline {
-  agent {label 'master'}
+  agents any
   stages {
     
     stage('build') {
@@ -17,6 +15,4 @@ pipeline {
       }
     }
   }
- post {
-     always {
-            sh 'git show -s --pretty=%an > commit.txt'
+ 
