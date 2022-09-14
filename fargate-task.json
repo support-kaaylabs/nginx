@@ -1,0 +1,8 @@
+{
+  "name": "nginx-service",
+  "version": "latest",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "Nginx:start": "nodemon index.js",
+  }
