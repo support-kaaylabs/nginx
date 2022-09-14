@@ -10,7 +10,7 @@ sed -e "s;task_role;${TASK_ROLE};g" ${JSON_FILE}-${BUILD_NUMBER}-v1.json > ${JSO
 cat ${JSON_FILE}-${BUILD_NUMBER}.json
 
  
-
+aws ecs register-task-definition --cli-input-json file://fargate-task.json --region ap-south-1
 
 # Jenkins Job wait until service is avaliable in cluster
 aws ecs wait services-stable --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ap-south-1 
@@ -24,45 +24,12 @@ fi
 rm -rf ${JSON_FILE}-${BUILD_NUMBER}.json
 }
 
-if [ "$GIT_BRANCH" == "master" ]
+if [ "$GIT_BRANCH" == "main" ]
 then
 SERVICE_NAME="nginx-service"
 IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
-TASK_FAMILY=
-CLUSTER="nginx-cluster"
-JSON_FILE=
-RUNNING_COUNT=1
-startDeploy
-elif [ "$GIT_BRANCH" == "main" ]
-then
-SERVICE_NAME="nginx-service"
-IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
-TASK_FAMILY=
-CLUSTER="nginx-cluster"
-TASK_ROLE=
-JSON_FILE=
-RUNNING_COUNT=1
-startDeploy
-elif [ "$GIT_BRANCH" == "qa" ]
-then
-SERVICE_NAME="nginx-service"
-IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
-TASK_FAMILY=
-CLUSTER="nginx-cluster"
-TASK_ROLE=
-JSON_FILE=
-RUNNING_COUNT=1
-startDeploy
-elif [ "$GIT_BRANCH" == "main" ]
-then
-SERVICE_NAME="nginx-service"
-IMAGE_VERSION="${GIT_BRANCH}-${BUILD_NUMBER}"
-TASK_FAMILY=
+TASK_FAMILY="nginx-service"
 CLUSTER="Nginx-cluster"
-TASK_ROLE=
-JSON_FILE="
+JSON_FILE="nginx-service"
 RUNNING_COUNT=1
-startDeploy
-else
-echo "Skipping a deployment because this branch is not permitted for docker deployment: ${GIT_BRANCH}"
-fi
+}
