@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Build()
+StartBuild()
 {
 ECR_REPO=659428036160.dkr.ecr.ap-south-1.amazonaws.com/nginx
 DOCKER_BUILD_TAG=$GIT_BRANCH-${BUILD_NUMBER}
