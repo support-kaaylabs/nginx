@@ -1,35 +1,21 @@
-FROM node:14.16.1-alpine3.11 as build
+FROM nginx:latest
 
-WORKDIR /apps
-
-RUN node --version
+RUN nginx --version
 
 RUN npm --version
 
-RUN apk add git
+# Create app directory
+WORKDIR /srv/api/
 
-COPY package*.json /apps/
+# Bundle app source
 
-RUN yarn install 
-
-COPY . /apps
-
-RUN yarn run build
-
-RUN ls
+COPY package*.json .npmrc /srv/api/
+RUN npm install
+COPY . /srv/api/
 
 # Confirm the working directory
 
-RUN ls -ltr build/
-
-FROM nginx:1.19.6-alpine
-
-COPY --from=build /apps/build /usr/share/nginx/html
-
-RUN rm -rf /etc/nginx/conf.d/default.conf
-
-COPY default.conf /etc/nginx/conf.d/
-
-EXPOSE  80
-
-CMD ["nginx", "-g", "daemon off;"]
+RUN ls -ltr
+EXPOSE 3000
+EXPOSE 4000
+CMD [ "sh", "-c","npm run $START_CMD" ]
