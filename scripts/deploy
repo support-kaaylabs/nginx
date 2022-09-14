@@ -3,10 +3,7 @@
 startDeploy()
 {
 # Create a new task definition for this build
-sed -e "s;GIT_COMMIT;${IMAGE_VERSION};g" ${JSON_FILE}.json > ${JSON_FILE}-new-${BUILD_NUMBER}.json
 
-sed -e "s;GROUP_NAME;${GIT_BRANCH};g" ${JSON_FILE}-new-${BUILD_NUMBER}.json > ${JSON_FILE}-${BUILD_NUMBER}-v1.json
-sed -e "s;task_role;${TASK_ROLE};g" ${JSON_FILE}-${BUILD_NUMBER}-v1.json > ${JSON_FILE}-${BUILD_NUMBER}.json
 cat ${JSON_FILE}-${BUILD_NUMBER}.json
 
  
