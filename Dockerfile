@@ -9,7 +9,7 @@ WORKDIR /srv/api/
 
 # Bundle app source
 
-COPY package*.json .npmrc /srv/api/
+COPY fargate-task*.json .npmrc /srv/api/
 RUN npm install
 COPY . /srv/api/
 
