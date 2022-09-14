@@ -10,7 +10,7 @@ sed -e "s;task_role;${TASK_ROLE};g" ${JSON_FILE}-${BUILD_NUMBER}-v1.json > ${JSO
 cat ${JSON_FILE}-${BUILD_NUMBER}.json
 
  
-aws ecs register-task-definition --cli-input-json file://fargate-task.json --region ap-south-1
+aws ecs register-task-definition --cli-input-json file://$HOME/tasks/fargate-task.json --region ap-south-1
 
 # Jenkins Job wait until service is avaliable in cluster
 aws ecs wait services-stable --cluster ${CLUSTER} --services ${SERVICE_NAME} --region ap-south-1 
